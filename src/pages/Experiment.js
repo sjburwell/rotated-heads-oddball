@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { navigate } from "@reach/router";
+import { fromEvent } from "rxjs";
+import { skipUntil, takeUntil, reduce } from "rxjs/operators";
 
 import { notion, useNotion } from "../services/notion";
 import { Nav } from "../components/Nav";
@@ -7,9 +9,11 @@ import studyData from "../studies/study";
 
 const study = window.lab.util.fromObject(studyData);
 
+// notion.enableLocalMode(); // Ensures data comes via local wifi instead of cloud
+
 export function Experiment() {
   const { user } = useNotion();
-  const [calm, setCalm] = useState(0);
+  const [brainwaves, setBrainwaves] = useState(null);
 
   useEffect(() => {
     if (!user) {
@@ -19,22 +23,29 @@ export function Experiment() {
 
   useEffect(() => {
     study.run();
-  }, []);
 
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
-
-    const subscription = notion.calm().subscribe((calm) => {
-      const calmScore = Math.trunc(calm.probability * 100);
-      setCalm(calmScore);
-    });
+    const subscription = notion
+      .brainwaves("raw")
+      .pipe(
+        skipUntil(fromEvent(study, "run")),
+        takeUntil(fromEvent(study, "end")),
+        reduce((acc, brainwaves) => {
+          return [...acc, brainwaves];
+        }, [])
+      )
+      .subscribe((brainwaves) => {
+        setBrainwaves(brainwaves);
+        console.log(`collected brainwaves!`, brainwaves);
+      });
 
     return () => {
       subscription.unsubscribe();
     };
-  }, [user]);
+  }, []);
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <main className="main-container">
@@ -51,6 +62,8 @@ export function Experiment() {
           </div>
         </main>
       </div>
+
+      <pre>{JSON.stringify(brainwaves, null, 2)}</pre>
     </main>
   );
 }
