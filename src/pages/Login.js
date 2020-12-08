@@ -3,7 +3,6 @@ import { navigate } from "@reach/router";
 import useEffectOnce from "react-use/lib/useEffectOnce";
 
 import { LoginForm } from "../components/LoginForm";
-import { Footer } from "../components/Footer";
 
 import { notion, useNotion } from "../services/notion";
 
@@ -74,7 +73,6 @@ export function Login() {
         onLogin={onLogin}
         error={error}
         loading={isLoggingIn}
-        footerComponent={<Footer />}
       />
     </main>
   );

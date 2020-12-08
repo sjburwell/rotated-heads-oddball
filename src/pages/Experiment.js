@@ -4,7 +4,7 @@ import { navigate } from "@reach/router";
 import { notion, useNotion } from "../services/notion";
 import { Nav } from "../components/Nav";
 
-export function Calm() {
+export function Experiment() {
   const { user } = useNotion();
   const [calm, setCalm] = useState(0);
 
@@ -30,11 +30,6 @@ export function Calm() {
   }, [user]);
 
   return (
-    <main className="main-container">
-      {user ? <Nav /> : null}
-      <div className="calm-score">
-        &nbsp;{calm}% <div className="calm-word">Calm</div>
-      </div>
-    </main>
+    <main className="main-container">{user ? <Nav /> : null}</main>
   );
 }
