@@ -1,5 +1,4 @@
-// Define study
-const study = lab.util.fromObject({
+export default {
   "title": "root",
   "type": "lab.flow.Sequence",
   "parameters": {},
@@ -56,10 +55,7 @@ const study = lab.util.fromObject({
           "textAlign": "center"
         }
       ],
-      "viewport": [
-        800,
-        600
-      ],
+      "viewport": [800, 600],
       "files": {},
       "responses": {},
       "parameters": {},
@@ -89,10 +85,7 @@ const study = lab.util.fromObject({
           "textAlign": "center"
         }
       ],
-      "viewport": [
-        800,
-        600
-      ],
+      "viewport": [800, 600],
       "files": {},
       "responses": {},
       "parameters": {},
@@ -194,11 +187,7 @@ const study = lab.util.fromObject({
         "parameters": {},
         "messageHandlers": {},
         "title": "oddball-task",
-        "shuffleGroups": [
-          [
-            "iti"
-          ]
-        ],
+        "shuffleGroups": [["iti"]],
         "template": {
           "type": "lab.flow.Sequence",
           "files": {},
@@ -234,10 +223,7 @@ const study = lab.util.fromObject({
                   "textAlign": "center"
                 }
               ],
-              "viewport": [
-                800,
-                600
-              ],
+              "viewport": [800, 600],
               "files": {},
               "responses": {},
               "parameters": {},
@@ -262,10 +248,7 @@ const study = lab.util.fromObject({
                   "autoScale": false
                 }
               ],
-              "viewport": [
-                800,
-                600
-              ],
+              "viewport": [800, 600],
               "files": {
                 "targ_dn_left.jpg": "embedded\u002F5de97a18766c85f80577b2814809ec5f6e8c866dc12c4fb9c6c6161cbdad64c5.jpg"
               },
@@ -297,10 +280,7 @@ const study = lab.util.fromObject({
                   "textAlign": "center"
                 }
               ],
-              "viewport": [
-                800,
-                600
-              ],
+              "viewport": [800, 600],
               "files": {},
               "responses": {},
               "parameters": {},
@@ -313,7 +293,4 @@ const study = lab.util.fromObject({
       }
     }
   ]
-})
-
-// Let's go!
-study.run()
+}

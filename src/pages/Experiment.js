@@ -3,6 +3,9 @@ import { navigate } from "@reach/router";
 
 import { notion, useNotion } from "../services/notion";
 import { Nav } from "../components/Nav";
+import studyData from "../studies/study";
+
+const study = window.lab.util.fromObject(studyData);
 
 export function Experiment() {
   const { user } = useNotion();
@@ -13,6 +16,10 @@ export function Experiment() {
       navigate("/login");
     }
   }, [user]);
+
+  useEffect(() => {
+    study.run();
+  }, []);
 
   useEffect(() => {
     if (!user) {
@@ -30,6 +37,20 @@ export function Experiment() {
   }, [user]);
 
   return (
-    <main className="main-container">{user ? <Nav /> : null}</main>
+    <main className="main-container">
+      {user ? <Nav /> : null}
+
+      <div className="container fullscreen" data-labjs-section="main">
+        <main className="content-vertical-center content-horizontal-center">
+          <div>
+            <h2>Loading Experiment</h2>
+            <p>
+              The experiment is loading and should start in a few
+              seconds
+            </p>
+          </div>
+        </main>
+      </div>
+    </main>
   );
 }
