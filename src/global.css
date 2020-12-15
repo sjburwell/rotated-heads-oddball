@@ -74,10 +74,11 @@ select {
   color: rgb(147, 147, 147);
   display: flex;
   flex-direction: row;
+  font-size: 10px;
   justify-content: space-between;
-  width: 60%;
-  min-height: 150px;
-  padding: 10px 20px;
+  width: 200px;
+  min-height: 50px;
+  padding: 10px 10px;
   border-radius: 8px;
   margin: 20px;
   position: fixed;
@@ -111,7 +112,7 @@ select {
 
 .card-footer {
   color: darkslategray;
-  margin-top: 20px;
+  margin-top: 5px;
   text-align: center;
 }
 
