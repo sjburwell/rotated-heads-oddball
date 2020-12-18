@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { navigate } from "@reach/router";
 import { fromEvent } from "rxjs";
-import { skipUntil, takeUntil, reduce } from "rxjs/operators";
+import anonymus from "anonymus";
 
 import { notion, useNotion } from "../services/notion";
 import { Nav } from "../components/Nav";
@@ -13,7 +13,6 @@ const study = window.lab.util.fromObject(studyData);
 
 export function Experiment() {
   const { user } = useNotion();
-  const [brainwaves, setBrainwaves] = useState(null);
 
   useEffect(() => {
     if (!user) {
@@ -24,23 +23,24 @@ export function Experiment() {
   useEffect(() => {
     study.run();
 
-    const subscription = notion
-      .brainwaves("raw")
-      .pipe(
-        skipUntil(fromEvent(study, "run")),
-        takeUntil(fromEvent(study, "end")),
-        reduce((acc, brainwaves) => {
-          return [...acc, brainwaves];
-        }, [])
-      )
-      .subscribe((brainwaves) => {
-        setBrainwaves(brainwaves);
-        console.log(`collected brainwaves!`, brainwaves);
-      });
-
-    return () => {
-      subscription.unsubscribe();
-    };
+    fromEvent(study, "run").subscribe(() => {
+      notion
+        .dispatchAction({
+          command: "brainwaves",
+          action: "record",
+          responseRequired: true,
+          responseTimeout: 300 * 1000 + 5000,
+          message: {
+            name: anonymus.create(), // Creates recording name. E.g. "Aliceblue llama"
+            experimentId: "rotated-heads-oddball", // Used for grouping recordings
+            label: "rotated-heads-oddball", // A tag for the recording
+            duration: 4000 //300 * 1000 //  300 seconds
+          }
+        })
+        .catch(() => {
+          alert(`Failed to communicate with device.`);
+        });
+    });
   }, []);
 
   if (!user) {
@@ -62,8 +62,6 @@ export function Experiment() {
           </div>
         </main>
       </div>
-
-      <pre>{JSON.stringify(brainwaves, null, 2)}</pre>
     </main>
   );
 }

@@ -7,6 +7,7 @@ import { Loading } from "./components/Loading";
 import { Login } from "./pages/Login";
 import { Logout } from "./pages/Logout";
 import { Experiment } from "./pages/Experiment";
+import { Instructions } from "./pages/Instructions";
 
 import { useNotion } from "./services/notion";
 
@@ -33,7 +34,8 @@ function Routes() {
 
   return (
     <Router>
-      <Experiment path="/" />
+      <Instructions path="/" />
+      <Experiment path="/experiment" />
       <Devices path="/devices" />
       <Login path="/login" />
       <Logout path="/logout" />
