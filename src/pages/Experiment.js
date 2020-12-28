@@ -5,7 +5,7 @@ import anonymus from "anonymus";
 
 import { notion, useNotion } from "../services/notion";
 import { Nav } from "../components/Nav";
-import studyData from "../studies/study";
+import studyData from "../studies/rho";
 
 const study = window.lab.util.fromObject(studyData);
 
@@ -34,7 +34,7 @@ export function Experiment() {
             name: anonymus.create(), // Creates recording name. E.g. "Aliceblue llama"
             experimentId: "rotated-heads-oddball", // Used for grouping recordings
             label: "rotated-heads-oddball", // A tag for the recording
-            duration: 4000 //300 * 1000 //  300 seconds
+            duration: 300 * 1000 //300 * 1000 //  300 seconds
           }
         })
         .catch(() => {
